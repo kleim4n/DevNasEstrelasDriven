@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Força</title>
+    <style>
+        @font-face {
+            font-family: Starjedi;
+            src: url("./assets/Starjedi.ttf");
+        }
+        .boneco {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      position: relative;
+    }
+
+    .darth-vader {
+      width: 300px;
+    }
+
+    .cabeca {
+      background: #0e0e13;
+      width: 300px;
+      height: 120px;
+
+      position: absolute;
+      top: 0;
+    }
+
+    .braco-esquerdo {
+      background: #0e0e13;
+      width: 100px;
+      height: 160px;
+
+      position: absolute;
+      left: 0;
+    }
+
+    .torso {
+      background: #0e0e13;
+      width: 100px;
+      height: 160px;
+
+      position: absolute;
+      left: 100px;
+    }
+
+    .braco-direito {
+      background: #0e0e13;
+      width: 100px;
+      height: 160px;
+
+      position: absolute;
+      right: 0;
+    }
+
+    .perna-esquerda {
+      background: #0e0e13;
+      width: 155px;
+      height: 160px;
+
+      position: absolute;
+      left: 0;
+      top: 190px;
+    }
+
+    .perna-direita {
+      background: #0e0e13;
+      width: 155px;
+      height: 160px;
+
+      position: absolute;
+      right: 0;
+      top: 190px;
+    }
+    body{
+        background: #0e0e13;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 26px;
+        margin-top: 32px;
+    }
+    h1{
+        color: #e6b93c;
+        font-family: Starjedi;
+    }
+    button{
+        background: #4b94c3;
+        color: #ffffff;
+        border: 0;
+        border-radius: 5%;
+        padding: 12px 24px;
+        cursor: pointer;
+    }
+    .palavra{
+        color: #e6b93c;
+        font-size: 42px;
+    }
+    .letra{
+        border: solid 1px #e6b93c;
+        padding: 5px;
+    }
+    .mostrar{
+        background: transparent;
+    }
+    </style>
+</head>
+<body>
+    <h1>Jogo da Força | Gabriel Kleiman</h1>
+    <div class="boneco">
+        <img src="assets/darth-vader.png" class="darth-vader" />
+        <div class="parte-do-boneco cabeca"></div>
+        <div class="parte-do-boneco braco-esquerdo"></div>
+        <div class="parte-do-boneco torso"></div>
+        <div class="parte-do-boneco braco-direito"></div>
+        <div class="parte-do-boneco perna-esquerda"></div>
+        <div class="parte-do-boneco perna-direita"></div>
+      </div>
+    <p class="palavra"><span class="letra">L</span><span class="letra">E</span><span class="letra">T</span><span class="letra">R</span><span class="letra">A</span></p>
+    <button onclick="chutar()">CHUTAR LETRA</button>
+    <img src="./assets/driven.png" alt="Logo driven" class="logo-driven">
+      <script>
+        const partesDoBoneco = Array.from(document.querySelectorAll(".parte-do-boneco"));
+        const letrasChutadas = [];
+        const palavra = "MACBOOK";
+        let errosTotais = 0;
+        const errosMax = partesDoBoneco.length;
+        mostrarPalavra();
+        function mostrarPalavra(){
+            let palavraExibida = "";
+                for(let i = 0; i < palavra.length; i++){
+                    if(letrasChutadas.includes(palavra[i])){
+                        palavraExibida = palavraExibida + "<span class='letra'>" + palavra[i] + "</span>";
+                    } else if(palavra[i] === ' '){
+                        palavraExibida = palavraExibida + ' ';
+                    } else {
+                        palavraExibida = palavraExibida + "<span class='letra'>_</span>";
+                    }
+                }
+                document.querySelector(".palavra").innerHTML = palavraExibida;
+        }
+        function chutar(){
+            if(errosTotais === errosMax) return;
+            const chute = prompt("Qual seu chute?");
+            if(letrasChutadas.includes(chute)){
+                alert("Chute já efetuado.");
+                return;
+            }
+            letrasChutadas.push(chute);
+            if(palavra.includes(chute)){
+                mostrarPalavra();
+            } else {
+                errosTotais++;
+                for(let i = 0; i < errosTotais; i++){
+                    partesDoBoneco[i].classList.add("mostrar");
+                }
+                if(errosTotais === errosMax){
+                    alert("Você perdeu!");
+                } else {
+                    alert("Chute errado, tente novamente.");
+                }
+            }
+        }
+      </script>
+</body>
+</html>
